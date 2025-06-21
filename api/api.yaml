@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: Case Software Engineer
+  version: 1.0.0
+paths:
+  /sobreviventes:
+    post:
+      summary: Retorna a probabilidade de sobrevivência dos passageiros
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                features:
+                  type: array
+                  items:
+                    type: number
+                passenger_id:
+                  type: string
+              required:
+                - features
+                - passenger_id
+      responses:
+        '200':
+          description: Resultado da predição
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  passenger_id:
+                    type: string
+                  probability:
+                    type: number
+      x-amazon-apigateway-integration:
+        uri: arn:aws:lambda:sa-east-1:437945666329:function:case_software_engineer
+        httpMethod: POST
+        type: aws_proxy
+        payloadFormatVersion: "2.0"
+
+    get:
+      summary: Lista todos os passageiros
+      responses:
+        '200':
+          description: Lista os passageiros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    passenger_id:
+                      type: string
+                    probability:
+                      type: number
+      x-amazon-apigateway-integration:
+        uri: arn:aws:lambda:sa-east-1:437945666329:function:case_software_engineer
+        httpMethod: GET
+        type: aws_proxy
+        payloadFormatVersion: "2.0"
+  /sobreviventes/{id}:
+    get:
+      summary: Retorna probabilidade de um passageiro específico
+      parameters:
+        - in: path
+          name: passenger_id
+          required: true
+          schema:
+            type: string
+          description: ID do passageiro
+      responses:
+        '200':
+          description: Sobrevivência do passageiro
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  passenger_id:
+                    type: string
+                  probability:
+                    type: number
+        '404':
+          description: Passageiro não encontrado
+      x-amazon-apigateway-integration:
+        uri: arn:aws:lambda:sa-east-1:437945666329:function:case_software_engineer
+        httpMethod: POST
+        type: aws_proxy
+        payloadFormatVersion: "2.0"
+    delete:
+      summary: Deleta um passageiro
+      parameters:
+        - in: path
+          name: passenger_id
+          required: true
+          schema:
+            type: string
+          description: ID do passageiro
+      responses:
+        '200':
+          description: Passageiro deletado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Passageiro não encontrado
+      x-amazon-apigateway-integration:
+          uri: arn:aws:lambda:sa-east-1:437945666329:function:case_software_engineer
+          httpMethod: POST
+          type: aws_proxy
+          payloadFormatVersion: "2.0"
