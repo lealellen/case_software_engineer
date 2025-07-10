@@ -1,12 +1,12 @@
 
-# Case do Caio: Software Engineer 
+# Case: Software Engineer 
 
 Esse projeto implementa uma API na AWS que preve a probabilidade de sobrevivencia de passageiros com base em um modelo de Machine Learning treinado no dataset do Titanic. a infraestrutura foi criada com Terraform e testada com Insomnia.
 
 ---
 
 ## ⚠️ Atenção
-
+|
 O código de infra contém o **número da conta AWS chumbado (437945666329)**
 
 ---
